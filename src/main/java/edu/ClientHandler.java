@@ -115,14 +115,19 @@ public class ClientHandler implements Runnable{
 
             StringBuilder messageBuilder = new StringBuilder();
 
-            for (int i = 2; i < parts.length-2; i++){
+            for (int i = 2; i < parts.length; i++){
 
                 messageBuilder.append(parts[i]);
                 if (i < parts.length - 1){
                     messageBuilder.append(" ");
                 }
 
-                String message = messageBuilder.toString();
+                String message = messageBuilder.toString().trim();
+
+                if (message.isEmpty()) {
+                    out.println("ERROR: Message content cannot be empty.");
+                return;
+                }
 
                 String broadcastMessage = String.format("MSG #%s: %s", channel, message);
 
